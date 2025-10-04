@@ -1,0 +1,24 @@
+name: Cache Example
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  cache-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up cache
+        id: cache-deps
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+          key: cache-f8540ad
+
+      - name: prime-cache-f8540ad
+        run: echo "Cache hit: ${{ steps.cache-deps.outputs.cache-hit }}"
